@@ -17,10 +17,16 @@ function App() {
     client.models.Todo.create({ content: window.prompt("Todo content") });
   }
 
+  function startMcServer() {
+    // insert logic to check if server is running already
+    // insert logic to  start the server
+  }
+
   return (
     <main>
       <h1>My todos</h1>
       <button onClick={createTodo}>+ new</button>
+      <button onClick={startMcServer}>Click to start up the minecraft server</button>
       <ul>
         {todos.map((todo) => (
           <li key={todo.id}>{todo.content}</li>
