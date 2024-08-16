@@ -37,7 +37,7 @@ function App() {
         throw new Error ('Network response was not ok');
       }
       const data: Response = await response.json();
-      setMessage(data.body);
+      setMessage(data.text);
     } catch (error){
       console.error('Error:', error);
       setMessage('An error occurred while triggering the lambda function');
