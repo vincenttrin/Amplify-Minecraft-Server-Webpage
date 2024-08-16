@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Schema } from "../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
-import axios from 'axios';
 
 const client = generateClient<Schema>();
 
@@ -27,17 +26,21 @@ function App() {
     try {
       const minecraftLauncherApi = 'https://p23vmmnxqh.execute-api.us-east-1.amazonaws.com/default/minecraft-launcher'
 
-      const response = await axios.post<APIResponse>(minecraftLauncherApi);
-
-      setMessage(response.data.message);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        setMessage('An error occured while triggering the lambda function');
-        console.error('Error:', error);
-      } else {
-        setMessage('An unexpected error occurred.');
-        console.error('Unexpected error:', error);
+      const response = await fetch(minecraftLauncherApi, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'applicaiton/json',
+        },
+      });
+    
+      if (!response.ok) {
+        throw new Error ('Network response was not ok');
       }
+      const data: Response = await response.json();
+      setMessage(data.body);
+    } catch (error){
+      console.error('Error:', error);
+      setMessage('An error occurred while triggering the lambda function');
     } finally {
       setIsLoading(false);
     }
