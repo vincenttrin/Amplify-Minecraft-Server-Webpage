@@ -1,8 +1,4 @@
-import { useEffect, useState } from "react";
-import type { Schema } from "../amplify/data/resource";
-import { generateClient } from "aws-amplify/data";
-
-const client = generateClient<Schema>();
+import { useState } from "react";
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
