@@ -5,19 +5,8 @@ import { generateClient } from "aws-amplify/data";
 const client = generateClient<Schema>();
 
 function App() {
-  const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
-
-  useEffect(() => {
-    client.models.Todo.observeQuery().subscribe({
-      next: (data) => setTodos([...data.items]),
-    });
-  }, []);
-  
-  function createTodo() {
-    client.models.Todo.create({ content: window.prompt("Todo content") });
-  }
   
   const startMinecraftServer = async () => {
     setIsLoading(true);
@@ -48,25 +37,11 @@ function App() {
 
   return (
     <main>
-      <h1>My todos</h1>
-      <h2>ip address: mc-server-nlb-15cf4a07a5c7beb3.elb.us-east-2.amazonaws.com</h2>
-      <button onClick={createTodo}>+ new</button>
+      <h1>ip address: mc-server-nlb-15cf4a07a5c7beb3.elb.us-east-2.amazonaws.com</h1>
       <button onClick={startMinecraftServer} disabled={isLoading}>
         {isLoading ? 'Starting the server...' : 'Start the Server'}
       </button>
       {message && <p>{message}</p>}
-      <ul>
-        {todos.map((todo) => (
-          <li key={todo.id}>{todo.content}</li>
-        ))}
-      </ul>
-      <div>
-        🥳 App successfully hosted. Try creating a new todo.
-        <br />
-        <a href="https://docs.amplify.aws/react/start/quickstart/#make-frontend-updates">
-          Review next step of this tutorial.
-        </a>
-      </div>
     </main>
   );
 }
