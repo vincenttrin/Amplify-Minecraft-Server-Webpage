@@ -49,6 +49,7 @@ function App() {
   return (
     <main>
       <h1>My todos</h1>
+      <h2>ip address: mc-server-nlb-15cf4a07a5c7beb3.elb.us-east-2.amazonaws.com</h2>
       <button onClick={createTodo}>+ new</button>
       <button onClick={startMinecraftServer} disabled={isLoading}>
         {isLoading ? 'Starting the server...' : 'Start the Server'}
